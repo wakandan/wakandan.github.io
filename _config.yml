@@ -1,6 +1,6 @@
 # Site settings
 title: Dang Nguyen Anh Khoa
-email: wakandan@domain.com
+email: wakandan@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
     My programming blog
 baseurl: "" # the subpath of your site, e.g. /blog/
