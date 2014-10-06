@@ -10,3 +10,6 @@ github_username:  wakandan
 
 # Build settings
 markdown: kramdown
+include: ['_pages']
+relative_permalinks: false
+paginate: 10
