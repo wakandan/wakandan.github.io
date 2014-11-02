@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "Effective VIM"
+date:   2014-10-09
+categories: vim
+---
+
+To search in VIM: 
+
+{% raw %}
+:grep word -R . //search for the word in all files in the current directory recursively
+{% endraw %}
+
+After that use `copen` to open a list of results where to can press enter and go to the file
