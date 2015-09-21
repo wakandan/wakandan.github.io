@@ -40,7 +40,7 @@ The code at (1) is actually the critical bit. From this, I can presume `Alloy.Mo
 
 The model code is skipped because it has nothing extra. Here's the bare-bone view code just to display the name
 
-{% highlight javascript %}
+{% highlight xml %}
 
     <Alloy>
         <Model src="shop"></Model>
