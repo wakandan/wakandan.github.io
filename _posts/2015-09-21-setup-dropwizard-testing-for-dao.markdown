@@ -32,13 +32,18 @@ import java.util.List;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.customizers.Define;
+import org.skife.jdbi.v2.unstable.BindIn;
 import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLocator;
 
 @UseStringTemplate3StatementLocator //(1)
 public interface HotelsDAO {
     @SqlQuery("SELECT id FROM provider_hotels WHERE hotel_id in (<hotel_ids>)") //(2)
     public List<Integer> getWegoHotelIdsForProviderHotelIds(
-            @Define("hotel_ids") List<Integer> hotelIds); //(3)
+            @Define("hotel_ids") List<Integer> hotelIds); //(3) - **DO NOT use this for list binding**
+
+    @SqlQuery("SELECT id FROM provider_hotels WHERE hotel_id in (<hotel_ids>)")
+    public List<Integer> getWegoHotelIdsForProviderHotelIdsNew(
+            @BindIn("hotel_ids") List<Integer> hotelIds); //(5)
 
     @RegisterMapper(HotelMapper.class) //(4)
     @SqlQuery("SELECT id FROM hotels WHERE location_id=:location_id")
@@ -52,9 +57,38 @@ The trick here is to _not_ use the param binding and substitute it with _string 
 
 - (2) notices the `<hotel_ids>` instead of the usual `:hotels` in normal binding. Remember we are not doing an argument binding here - this is a string interpolation
 
-- (3) here we use `Define` instead of `Bind` like normal. Same reason as in (2)
+- (3) here we use `Define` instead of `Bind` like normal. Same reason as in (2). 
 
 - (4) is not related to above points but still important nevertherless. In dropwizard docs I didn't know what one can register the mapping per method like this
+
+**Update** Apparently when you pass in a list for a `Define` binding, all the items in the list get concatenated into one big string. `Define` is good for **string substitution** but not good for list binding
+
+- (5) is the solution for list binding. It will still need the `UseStringTemplate3StatementLocator`, but it works well with list binding. Looking into the code reveals
+
+{% highlight java %}
+
+Collection<?> coll = (Collection<?>) arg; //coll is the collection you want to bind into the query
+BindIn in = (BindIn) annotation;
+final String key = in.value();
+final List<String> ids = new ArrayList<String>();
+for (int idx = 0; idx < coll.size(); idx++) {
+    ids.add("__" + key + "_" + idx);
+}
+
+StringBuilder names = new StringBuilder();
+for (Iterator<String> i = ids.iterator(); i.hasNext();) {
+    names.append(":").append(i.next());
+    if (i.hasNext()) {
+        names.append(",");
+    }
+}
+final String ns = names.toString();
+
+{% endhighlight %}
+
+This code will create a new list of name binding for the list of parameters. So let's say you have a `hotel_ids` bindIn, and the value param is `[1,2,3]`, `bindIn` will convert this list into normal binding list ` :__hotel_ids_1, :__hotel_ids_2, :__hotel_ids_3` and then use string substitution to replace the bindIn's key with this list. As for value list, each item will be converted into string and then concatenated together with `,`, _precisely_ what we need.
+
+Note that `BindIn` is still in `unstable` package. Not sure why (??)
 
 Set up for DAO testing
 ======================
