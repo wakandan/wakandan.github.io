@@ -2,6 +2,8 @@
 published: false
 ---
 ## A few notes about django so far
+### Does django handle request by thread or process?
+The correct answer is that django is a WSGI application, which is not a server itself but only interfaces with a server. How a process is servered (by process or by thread) is entirely based on the WSGI server django sits on top of (e.g. uWSGI, Gunicorn, mod_wsgi)
 ### Generator is kind of cool
 ...but it can not be used in a django template. In the template, the generator is always turned into a list before being iterated over. [reference](https://github.com/django/django/commit/6b730e1e92)
 - consider a DFS travesal piece of code in python
@@ -34,6 +36,4 @@ Take a look at the line marked `important` above. Each time a path is yield, it 
 To fix this, just need to change the `#important` line into `yield path[:]` to return a copy of the path instead of returning the reference object.
 
 ### Django cache from `django.core.cache.caches`
-...has  really small default cache size (300 entries). When the number of entries exceeds this number, the old entries are removed. 
-
-
+...has  really small default cache size (300 entries). When the number of entries exceeds this number, the old entries are removed.
