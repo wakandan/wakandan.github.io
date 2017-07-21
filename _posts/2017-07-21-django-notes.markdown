@@ -37,3 +37,30 @@ To fix this, just need to change the `#important` line into `yield path[:]` to r
 
 ### Django cache from `django.core.cache.caches`
 ...has  really small default cache size (300 entries). When the number of entries exceeds this number, the old entries are removed.
+
+### In python, `mock` is not cleared easily as in java
+Python mock persists through tests. If in one test a method of an object is mocked, the same mocked method will be used in other tests. 
+
+```python
+def test_method_1():
+	utils.validate_data = mock.Mock(return_value=True)
+    ...
+    
+def test_method_2():
+	validation = utils.validate_data(content) # bingo, you are doomed!
+```
+
+There's also no `clear()` method for django mock. The way to go about it is to store the method reference to some variable, and the restore the reference after mock has done its job. Below is a a fix:
+
+```python
+def test_method_1():
+	original_validate_data_fn = utils.validate_data
+	utils.validate_data = mock.Mock(return_value=True)
+    ...
+    # after finish using the mocked function
+    utils.validate_data = original_validate_data_fn
+    
+def test_method_2():
+	validation = utils.validate_data(content) # you are safe here
+```
+
