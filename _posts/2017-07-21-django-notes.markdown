@@ -90,3 +90,8 @@ dict_comprehension = {node['id']: node['content'] for node in node_list}
 ```python
 dict_merge = {**dict_a, **dict_b}
 ```
+
+### Droping to a debugging shell when running
+```python
+import pdb; pdb.set_trace()
+```
