@@ -1,5 +1,6 @@
 ---
-published: false
+published: true
+layout: post
 ---
 ## A few notes about django so far
 ### Does django handle request by thread or process?
