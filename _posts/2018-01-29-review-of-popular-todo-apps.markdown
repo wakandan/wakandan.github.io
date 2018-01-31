@@ -22,6 +22,18 @@ This tool has been great so far, however it's going to be retired soon in favor 
 - Going to be retired soon
 - Can't archive lists. This mean when you want to reuse a list, you will have to keep it forever. I'd like to keep my list of item list for each trips separated, but I don't like keeping them around once the trip is done. Something like google keep archive feature would be nice
 
+## Todoist
+
+### Pros:
+
+- Highest rated to-do app in google play
+
+### Cons:
+
+- Needs to pay for task reminder. This is ridiculous
+- The list interface is weird. You click one and it doesn't go into detail view. Instead, it shows a menu at the bottom to have a bunch of options for the task (like completing the task)
+- Bad UX in general
+
 ## AnyDo
 
 Switching from Wunderlist to AnyDo is quite a pain because their interfaces are different
@@ -29,10 +41,11 @@ Switching from Wunderlist to AnyDo is quite a pain because their interfaces are 
 ### Pros:
 
 - Have most of must-have features
+- In 1 list it has 4 sublist: today, tomorrow, soon, some day. A task which is added into a corresponding list is set due date according to the list due. This is a nice feature which is from GTD book
 
 ### Cons:
 
-- Reminder interface sucks
+- Reminder interface sucks. It doesn't allow you to set reminder for a particular time
 - Overal interface looks futuristic but usability is terrible. One has to click multiple time to get to where the target list is, and going back is even worse
 
 ## Ticktick
