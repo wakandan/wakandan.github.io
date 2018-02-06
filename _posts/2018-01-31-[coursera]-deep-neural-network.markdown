@@ -65,4 +65,18 @@ where the part \\(1-\beta\\) is removed. When this is used, the \\(learning\\_ra
 
 ## RMSprop (Root mean square prop)
 
-Objective of RMSprop is to slow download learning biases and accelerate learning weights 
+Objective of RMSprop is to slow download learning biases and accelerate learning weights. The steps are as follow:
+- calculate dW, db as normal
+- compute
+
+$$ S_{dW} = \beta * S_{dW} + (1-\beta)*dW^2$$
+
+$$ S_{db} = \beta * S_{db} + (1-\beta)*db^2$$
+
+- Assign
+
+$$ W:= W - \alpha * \dfrac{dW}{\sqrt{S_{dW}}}$$
+
+$$ b:= b - \alpha * \dfrac{db}{\sqrt{S_{db}}}$$
+
+where \\(\alpha\\) is the learning rate
