@@ -62,3 +62,7 @@ Sometimes you can see
 $$ V_{dW} = \beta * V_{dW} + dW $$
 
 where the part \\(1-\beta\\) is removed. When this is used, the \\(learning\\_rate\\) is adjusted accordingly, making it less intuitive. Therefore the original form is always preferred.
+
+## RMSprop (Root mean square prop)
+
+Objective of RMSprop is to slow download learning biases and accelerate learning weights 
