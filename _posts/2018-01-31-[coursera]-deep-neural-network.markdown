@@ -75,8 +75,10 @@ $$ S_{db} = \beta * S_{db} + (1-\beta)*db^2$$
 
 - Assign
 
-$$ W:= W - \alpha * \dfrac{dW}{\sqrt{S_{dW}}}$$
+$$ W:= W - \alpha * \dfrac{dW}{\sqrt{S_{dW}} + \epsilon}$$
 
-$$ b:= b - \alpha * \dfrac{db}{\sqrt{S_{db}}}$$
+$$ b:= b - \alpha * \dfrac{db}{\sqrt{S_{db}} + \epsilon}$$
 
-where \\(\alpha\\) is the learning rate
+where \\(\alpha\\) is the learning rate. \\(\epsilon\\) (usually equal \\(10^{-8}\\) or similar tiny amount) is added to make sure that the denominator doesn't go to 0
+
+With RMSProp, one can start using larger learning rate to learn faster
