@@ -65,7 +65,7 @@ where the part \\(1-\beta\\) is removed. When this is used, the \\(learning\\_ra
 
 ## RMSprop (Root mean square prop)
 
-Objective of RMSprop is to slow download learning biases and accelerate learning weights. The steps are as follow:
+Objective of RMSprop is to slow down learning biases and accelerate learning weights. The steps are as follow:
 - calculate dW, db as normal
 - compute
 
