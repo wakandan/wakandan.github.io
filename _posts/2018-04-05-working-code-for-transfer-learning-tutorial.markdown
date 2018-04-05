@@ -7,7 +7,7 @@ The original code is from [this link](https://www.analyticsvidhya.com/blog/2017/
 
 From the article, since our dataset is small, there are 2 approaches I could transfer learning from vgg16 model:
 
-#Use vgg16 as a feature extractor
+# Use vgg16 as a feature extractor
 
 In this approach, we remove the last layer of vgg16, add on a MLP we built which has 10 output tensors (for 10 classes), and only retrain *this MLP* model. Concretely, we don't take features from MMIST input directly. We first feed MNIST input into our modified version of vgg16 to get a vector of feature of shape (1, 7\*7\*512). These vectors are then used as input to our MLP model, and with the MNIST output we can train this MLP. Similarly during inference time, we will also need to feed the test data into vgg16 first, then use run this input through our MLP to get the final result. The code is shown below.
 
