@@ -164,3 +164,20 @@ model = create_vgg16_model(img_rows, img_cols, channel, num_classes)
 model.fit(X_train, Y_train,batch_size=batch_size,epochs=nb_epoch,shuffle=True,verbose=1,validation_data=(X_valid, Y_valid))
 
 {% endhighlight %}
+
+Important thing to note is that part of \*\*\*. In the original article, poping a layer was done like this
+
+{% highlight python %}
+model.layers.pop()
+model.outputs = [model.layers[-1].output]
+model.layers[-1].outbound_nodes = []
+x=Dense(num_classes, activation='softmax')(model.output)
+{% endhighlight %}
+
+This seems like a working approach for old versions of keras, but a working version of the code is like in the code above. The reason was that for a sequential model, the way to pop a layer is through `model.pop()`, however this vgg16 doesn't seem like a sequential model, therefore there is no such available method call. The next best thing to do is to pop the layer manually, however doing so would not trigger necessary clean up, hence the mess after in the above code. In the newer version, this seems to also work:
+
+{% highlight python %}
+model.layers.pop()
+x=Dense(num_classes, activation='softmax')(model.layers[-1].output) 
+model=Model(model.input,x)
+{% endhighlight %}
