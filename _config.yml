@@ -13,3 +13,4 @@ markdown: Kramdown
 include: ['_pages']
 relative_permalinks: false
 paginate: 10
+plugins: ['jekyll-paginate']
